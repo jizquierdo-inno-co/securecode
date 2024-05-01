@@ -1,0 +1,29 @@
+name: Laravel CI
+
+on:
+  push:
+    branches:
+      - main  # Cambia 'main' por el nombre de tu rama principal si es diferente
+  pull_request:
+    branches:
+      - main  # Cambia 'main' por el nombre de tu rama principal si es diferente
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código fuente
+      uses: actions/checkout@v2
+
+    - name: Instalar PHP y Composer
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.0'
+        tools: composer
+
+    - name: Instalar dependencias de Composer
+      run: composer install --no-interaction --prefer-dist
+
+    - name: Ejecutar pruebas PHPUnit
+      run: vendor/bin/phpunit
